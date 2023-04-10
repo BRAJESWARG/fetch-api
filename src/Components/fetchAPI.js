@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from "react";
 
-function FetchAPI() {
+function App() {
+    const [user, setUser] = useState([]);
 
-    const [data, setData] = useState([]);
-
-    const fetchApiData = () => {
-
-        fetch(`http://192.168.195.1:8040/api/v1/TheSiren`)
+    const fetchData = () => {
+        return fetch("https://jsonplaceholder.typicode.com/todos")
             .then((response) => response.json())
-            .then((json) => {
-                console.log(json);
-                setData(json);
-            })
+            .then((data) => setUser(data));
     }
 
     useEffect(() => {
-        fetchApiData();
+        fetchData();
     }, [])
 
-
-
     return (
-        <>
-            <h1>Hey!</h1>
-            <button onClick={fetchApiData}>Fetch Api</button>
-            <br />
-            <pre>
-                {JSON.stringify(data, null, 2)}
-            </pre>
-            
-        </>
+        <center>
+            <table>
+                <tr>
+                    <th>UserId</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Completed</th>
+                </tr>
+                
+                {user && user.length > 0 && user.map((userObj, index) => (
+                    <tr key={userObj.userId}>
+                        <td>{userObj.userId}</td>
+                        <td>{userObj.id}</td>
+                        <td>{userObj.title}</td>
+                        <td>{userObj.completed ? "Yes" : "No"}</td>
+                    </tr>
+                ))}
+            </table>
+        </center>
     );
 }
 
-export default FetchAPI;
+export default App;
