@@ -7,7 +7,9 @@ function App() {
   const data = useGlobalContext();
   return (
     <div className="App">
-      <div>My name is {data} </div>
+    {
+      // <div>My name is {data} </div>
+    }
       <FetchAPI />
     </div>
   );
